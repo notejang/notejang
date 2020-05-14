@@ -1,0 +1,17 @@
+<button mat-raised-button color="primary" (click)="clickFileSelector()">
+  <mat-icon>camera_alt</mat-icon>
+</button>
+
+<div #canvasContainer class="canvas">
+  <canvas #canvas></canvas>
+</div>
+
+<input (keyup)="search()" [(ngModel)]="searchText" type="search" />
+
+<input
+  #fileSelector
+  (change)="onFileChange($event)"
+  accept="image/*"
+  style="display: none;"
+  type="file"
+/>

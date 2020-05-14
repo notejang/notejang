@@ -1,0 +1,16 @@
+<h1>Notes</h1>
+
+<div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="16px">
+  <app-contact-card
+    fxFlex.gt-md="0 1 calc(25% - 16px)"
+    fxFlex.lt-lg="0 1 calc(50% - 16px)"
+    fxFlex.xs="calc(100% - 16px)"
+    *ngFor="let contact of contacts$ | async"
+    [contact]="contact"
+    routerLink="/update-contact/{{ contact.email }}"
+  >
+  </app-contact-card>
+</div>
+<p *ngIf="(contacts$ | async)?.length==0">
+  It's looking lonely in here... try <a routerLink="/add-contact">adding a new note</a>
+</p>
