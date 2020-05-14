@@ -1,4 +1,6 @@
 # notejang
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/notejang/notejang) 
+
 This project was scaffolded using [chapi-chapi/generator-angular](https://github.com/chapi-chapi/generator-angular)
 
 App for storing notes and tingz
