@@ -1,0 +1,9 @@
+<div *ngIf="note$ | async as note">
+  <h1>Update {{note.title}}</h1>
+
+  <app-note-form
+    [isUpdate]="true"
+    [note]="note"
+    (submitFormEvent)="submitFormHandler($event)"
+  ></app-note-form>
+</div>

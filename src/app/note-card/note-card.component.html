@@ -1,0 +1,25 @@
+<mat-card matRipple class="note-card" *ngIf="note">
+  <mat-card-header>
+    <div mat-card-avatar class="note-card-avatar-container">
+      <mat-icon
+        aria-hidden="false"
+        class="note-card-avatar"
+        aria-label="Note avatar"
+        >note</mat-icon
+      >
+    </div>
+    <mat-card-title
+      >{{ note.title }}</mat-card-title
+    >
+    <mat-card-subtitle>{{ note.tags }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ note.body }}</p>
+    <div class="note-modified-info">
+      <strong>Created:</strong> {{ note.insertedUtc | timeago }}
+    </div>
+    <div class="note-modified-info">
+      <strong>Last updated:</strong> {{ note.updatedUtc | timeago}}
+    </div>
+  </mat-card-content>
+</mat-card>

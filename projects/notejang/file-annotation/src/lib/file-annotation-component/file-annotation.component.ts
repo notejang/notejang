@@ -19,21 +19,10 @@ export class FileAnnotationComponent implements AfterViewInit {
   @ViewChild("canvas") canvas: ElementRef;
   @ViewChild("canvasContainer") canvasContainer: ElementRef;
 
-  @Input()
-  tesseractAssetsPath = "./tesseract_2.1.1";
-
   result: tesseract.Page;
-  words: any[];
-  symbols: any[];
-  selectedLine = null;
-  selectedWord = null;
-  selectedSymbol = null;
-  elementColumns: string[] = ["text"];
-  progressStatus: string;
-  progress: number;
   language = "eng";
   private ctx: CanvasRenderingContext2D;
-  private selectedFile: File;
+  public selectedFile: File;
   private image: any;
   private ratio: number;
   public searchText: string;
@@ -81,16 +70,6 @@ export class FileAnnotationComponent implements AfterViewInit {
   ) {
     if (bbox) {
       if (redraw) this.redrawImage();
-
-      // <rect x="0" y="0" rx="5" width="100" height="60" style="stroke: green; stroke-width: 2; fill: yellow;">
-
-      // this.ctx.beginPath();
-      // this.ctx.rect(bbox.x0 * this.ratio, bbox.y0 * this.ratio, bbox.y1 - bbox.y0, bbox.x1 = bbox.x0);
-      // this.ctx.moveTo(bbox.x0 * this.ratio, bbox.y0 * this.ratio);
-      // this.ctx.lineTo(bbox.x1 * this.ratio, bbox.y0 * this.ratio);
-      // this.ctx.lineTo(bbox.x1 * this.ratio, bbox.y1 * this.ratio);
-      // this.ctx.lineTo(bbox.x0 * this.ratio, bbox.y1 * this.ratio);
-      // this.ctx.closePath();
       this.ctx.strokeStyle = "rgba(255,255,0, 1)";
       this.ctx.fillStyle = "rgba(255,255,0, 0.3)";
       this.ctx.fillRect(
@@ -99,8 +78,6 @@ export class FileAnnotationComponent implements AfterViewInit {
         bbox.x1 - bbox.x0,
         bbox.y1 - bbox.y0
       );
-      // this.ctx.lineWidth = 1;
-      // this.ctx.stroke();
       if (tag) {
         this.ctx.lineWidth = 0.5;
         this.ctx.strokeText(
@@ -110,17 +87,6 @@ export class FileAnnotationComponent implements AfterViewInit {
         );
       }
     }
-  }
-
-  onLineClick(line) {
-    this.words = line.words;
-
-    this.drawBBoxOnCanvas(line.bbox);
-
-    this.symbols = null;
-    this.selectedLine = line;
-    this.selectedWord = null;
-    this.selectedSymbol = null;
   }
 
   private drawImageScaled(img) {
@@ -134,8 +100,8 @@ export class FileAnnotationComponent implements AfterViewInit {
       this.ratio = 1;
     }
 
-    this.canvas.nativeElement.width = img.width * this.ratio;
-    this.canvas.nativeElement.height = img.height * this.ratio;
+    this.canvas.nativeElement.width = img.width;
+    this.canvas.nativeElement.height = img.height;
 
     this.ctx.clearRect(0, 0, width, height);
     this.ctx.drawImage(
@@ -152,6 +118,7 @@ export class FileAnnotationComponent implements AfterViewInit {
   }
 
   search() {
+    if (!this.result || !this.result.lines) return;
     this.redrawImage();
     const searchTerms = this.searchText.split(" ").map((x) => x.toLowerCase());
     this.result.lines.forEach((line) => {

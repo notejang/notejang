@@ -2,11 +2,14 @@
   <mat-icon>camera_alt</mat-icon>
 </button>
 
+<div style="float:right;">
+  <label>{{selectedFile && !result ? 'Scanning Image... ' : selectedFile && result? 'Search text in image: ' : 'Please select an image '}}</label>
+  <input [disabled]="!result" (keyup)="search()" [(ngModel)]="searchText" type="search" />
+</div>
+
 <div #canvasContainer class="canvas">
   <canvas #canvas></canvas>
 </div>
-
-<input (keyup)="search()" [(ngModel)]="searchText" type="search" />
 
 <input
   #fileSelector

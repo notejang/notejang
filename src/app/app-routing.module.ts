@@ -1,27 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ContactsComponent } from './contacts/contacts.component';
-import { AddContactComponent } from './pages/add-contact/add-contact.component';
-import { UpdateContactComponent } from './pages/update-contact/update-contact.component';
+import { NotesComponent } from './notes/notes.component';
+import { AddNoteComponent } from './pages/add-note/add-note.component';
+import { UpdateNoteComponent } from './pages/update-note/update-note.component';
 import { AnnotateFileComponent } from './pages/annotate-file/annotate-file.component';
 
 
 const routes: Routes = [
   {
-    path: 'contacts',
-    component: ContactsComponent
+    path: 'notes',
+    component: NotesComponent
   },
   { path: '',
-    redirectTo: '/contacts',
+    redirectTo: '/notes',
     pathMatch: 'full'
   },
   {
-    path: 'add-contact',
-    component: AddContactComponent
+    path: 'add-note',
+    component: AddNoteComponent
   },
   {
-    path: 'update-contact/:email',
-    component: UpdateContactComponent
+    path: 'update-note/:id',
+    component: UpdateNoteComponent
   },
   {
     path: 'annotate',

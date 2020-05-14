@@ -1,0 +1,21 @@
+<form class="add-note-form" [formGroup]="noteForm" (ngSubmit)="onSubmit(noteForm.value)">
+  <mat-form-field *ngIf="!isUpdate" appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput placeholder="A New Note" [formControlName]="'title'" required>
+    <mat-error *ngIf="noteForm.touched && noteForm.invalid && noteForm.getError('title')">{{noteForm.getError('title')}}</mat-error>
+  </mat-form-field>
+
+  <!-- <mat-form-field appearance="fill">
+    <mat-label>Tags</mat-label>
+    <input matInput placeholder="John" [formControlName]="'firstName'" required>
+  </mat-form-field> -->
+
+  <mat-form-field appearance="fill">
+    <mat-label>Body</mat-label>
+    <textarea matInput placeholder="Some stuff" [formControlName]="'body'" required style="height: 50vh;font-size: 1.5rem;"></textarea>
+  </mat-form-field>
+
+  <!-- <mat-error *ngIf="addNoteForm.touched && addNoteForm.invalid">One or more errors in form.</mat-error> -->
+
+  <button mat-raised-button type="submit" color="primary" [disabled]="!noteForm.valid">Submit</button>
+</form>
