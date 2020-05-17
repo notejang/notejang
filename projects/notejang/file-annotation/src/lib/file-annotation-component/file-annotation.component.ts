@@ -5,19 +5,31 @@ import {
   ElementRef,
   ViewChild,
   Input,
+  Output,
+  EventEmitter,
+  OnInit,
 } from "@angular/core";
 import * as tesseract from "tesseract.js";
-import { NgProgressComponent } from "@ngx-progressbar/core";
+import { IImageWithOCRCoordinates } from "../models/IImageWithOCRCoordinates";
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: "notejang-file-annotation",
   templateUrl: "./file-annotation.component.html",
   styleUrls: ["./file-annotation.component.scss"],
 })
-export class FileAnnotationComponent implements AfterViewInit {
+export class FileAnnotationComponent implements OnInit, AfterViewInit {
   @ViewChild("fileSelector") fileInput: ElementRef;
   @ViewChild("canvas") canvas: ElementRef;
   @ViewChild("canvasContainer") canvasContainer: ElementRef;
+
+  @Output()
+  imageLoadedWithOCRCoordinatesEvent: EventEmitter<
+    IImageWithOCRCoordinates
+  > = new EventEmitter<IImageWithOCRCoordinates>();
+
+  @Input()
+  preRenderedImage?: IImageWithOCRCoordinates;
 
   result: tesseract.Page;
   language = "eng";
@@ -27,10 +39,20 @@ export class FileAnnotationComponent implements AfterViewInit {
   private ratio: number;
   public searchText: string;
 
-  constructor(private readonly changeDetectionRef: ChangeDetectorRef) {}
+  constructor(private readonly changeDetectionRef: ChangeDetectorRef, private sanitizer: DomSanitizer) {}
 
   ngAfterViewInit(): void {
     this.ctx = this.canvas.nativeElement.getContext("2d");
+  }
+
+  ngOnInit() {
+    if (this.preRenderedImage) {
+      this.selectedFile = this.preRenderedImage.file;
+      this.image = new Image();
+      this.image.onload = () => this.drawImageScaled(this.image);
+      this.image.src = this.preRenderedImage.base64Image;
+      (this.result as any) = { lines: this.preRenderedImage.ocrResult };
+    }
   }
 
   clickFileSelector() {
@@ -52,6 +74,13 @@ export class FileAnnotationComponent implements AfterViewInit {
       .then((result) => {
         if (result) {
           this.result = (result as tesseract.RecognizeResult).data;
+
+          // Upload the image and tesseract result to the server
+          this.imageLoadedWithOCRCoordinatesEvent.emit({
+            base64Image: this.canvas.nativeElement.toDataURL('image/png'),
+            ocrResult: (this.result.lines.map(line => ({bbox: line.bbox, text: line.text, words: line.words.map(word => ({bbox: word.bbox, text: word.text}))})) as any),
+            file: this.selectedFile,
+          });
         }
       });
     event.target.value = null;

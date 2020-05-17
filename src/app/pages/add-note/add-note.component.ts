@@ -10,6 +10,7 @@ import { INote } from "../../shared/models/INote";
 import { ApiService } from "../../shared/services/api.service";
 import { Router } from "@angular/router";
 import { NotificationsService } from "../../shared/services/notifications.service";
+import { IImageWithOCRCoordinates } from '@notejang/file-annotation';
 
 @Component({
   selector: "app-add-note",
@@ -22,10 +23,12 @@ export class AddNoteComponent implements OnInit {
     private notificationService: NotificationsService,
     private router: Router
   ) {}
+  note: INote;
 
   ngOnInit(): void {}
 
   public submitFormHandler(noteInfo: INote) {
+    noteInfo = {...this.note, ...noteInfo};
     noteInfo.id = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
       /[xy]/g,
       (c) => {
@@ -42,5 +45,12 @@ export class AddNoteComponent implements OnInit {
       );
       this.router.navigate(["/notes"]);
     });
+  }
+
+  handleImageLoadedWithOCRCoordinatesEvent(imageWithOCRResult: IImageWithOCRCoordinates) {
+    this.note = {
+      imageWithOCRResult,
+      title: imageWithOCRResult.file.name
+    };
   }
 }

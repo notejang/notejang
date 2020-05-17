@@ -1,3 +1,6 @@
 <h1>Annotate File</h1>
 
-<notejang-file-annotation></notejang-file-annotation>
+<notejang-file-annotation (imageLoadedWithOCRCoordinatesEvent)="handleImageLoadedWithOCRCoordinatesEvent($event)"></notejang-file-annotation>
+
+
+<button mat-raised-button (click)="saveAsNote()" color="primary" [disabled]="!note">Save as Note</button>

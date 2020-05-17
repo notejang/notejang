@@ -4,7 +4,7 @@
   "description": "notejang",
   "scripts": {
     "mock:server": "json-server --port 5000 --routes mock-api/routes.json --watch mock-api/db.json --no-cors=true",
-    "start:proxy": "ng serve --proxy-config proxy.conf.json",
+    "start:proxy": "ng serve --proxy-config proxy.conf.json --vendor-source-map",
     "ng": "ng",
     "clean": "rimraf ./dist",
     "start": "ng serve",

@@ -1,6 +1,8 @@
 <div *ngIf="note$ | async as note">
   <h1>Update {{note.title}}</h1>
 
+  <notejang-file-annotation [preRenderedImage]="note.imageWithOCRResult"></notejang-file-annotation>
+
   <app-note-form
     [isUpdate]="true"
     [note]="note"

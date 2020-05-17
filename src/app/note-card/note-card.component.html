@@ -1,7 +1,8 @@
 <mat-card matRipple class="note-card" *ngIf="note">
   <mat-card-header>
     <div mat-card-avatar class="note-card-avatar-container">
-      <mat-icon
+      <img *ngIf="note.imageWithOCRResult" [src]="note.imageWithOCRResult.base64Image"/>
+      <mat-icon *ngIf="!note.imageWithOCRResult"
         aria-hidden="false"
         class="note-card-avatar"
         aria-label="Note avatar"
