@@ -1,6 +1,12 @@
 # notejang
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/notejang/notejang) 
 
+Note taking app with ability to scan and highlight documents.
+
+Current State (Still in initial PoC stage):
+
+![Preview](./initial_poc.gif)
+
 This project was scaffolded using [chapi-chapi/generator-angular](https://github.com/chapi-chapi/generator-angular)
 
 App for storing notes and tingz
