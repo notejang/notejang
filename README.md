@@ -9,6 +9,13 @@ Current State (Still in initial PoC stage):
 
 This project was scaffolded using [chapi-chapi/generator-angular](https://github.com/chapi-chapi/generator-angular)
 
+# Debugging
+TO Run yourself use, click the gitpod button above or clone and npm install and then run:
+
+```shell
+start:proxy:mock:server
+```
+
 App for storing notes and tingz
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
